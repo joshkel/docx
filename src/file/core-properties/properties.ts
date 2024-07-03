@@ -1,7 +1,7 @@
 import { ICommentsOptions } from "@file/paragraph/run/comment-run";
 import { ICompatibilityOptions } from "@file/settings/compatibility";
 import { FontOptions } from "@file/fonts/font-table";
-import { StringContainer, XmlComponent } from "@file/xml-components";
+import { StringContainer, XmlAttributeComponent, XmlComponent } from "@file/xml-components";
 import { dateTimeValue } from "@util/values";
 
 import { ICustomPropertyOptions } from "../custom-properties";
@@ -106,11 +106,15 @@ export class CoreProperties extends XmlComponent {
     }
 }
 
+class TimestampElementProperties extends XmlAttributeComponent<{ readonly type: string }> {
+    protected readonly xmlKeys = { type: "xsi:type" };
+}
+
 class TimestampElement extends XmlComponent {
     public constructor(name: string) {
         super(name);
         this.root.push(
-            new DocumentAttributes({
+            new TimestampElementProperties({
                 type: "dcterms:W3CDTF",
             }),
         );
